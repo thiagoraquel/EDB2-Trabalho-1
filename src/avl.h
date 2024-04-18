@@ -24,20 +24,14 @@ public:
     ++m_size;
     node *runner = m_root;
     node *parent = nullptr;
-    node *unbalanced = nullptr;
     while (runner != nullptr) {
       parent = runner;
       if (runner->first > data.first) {
         runner = runner->left_child;
-        --(parent->children_high_difference);
       } else if (runner->first < data.first) {
         runner = runner->right_child;
-        ++(parent->children_high_difference);
       } else {
         return; // chave ja existe
-      }
-      if (unbalanced == nullptr && abs(parent->children_high_difference) > 2) {
-        unbalanced = parent;
       }
     }
     node *new_node =
@@ -51,11 +45,15 @@ public:
       ++(parent->children_high_difference);
       parent->right_child = new_node;
     }
-    if (unbalanced != nullptr && unbalanced->children_high_difference == 2) {
-      left_rotation(unbalanced);
-    } else if (unbalanced != nullptr &&
-               unbalanced->children_high_difference == -2) {
-      right_rotation(unbalanced);
+    while (parent != nullptr) {
+      if (parent->children_high_difference == 2) {
+        left_rotation(parent);
+        return;
+      } else if (parent->children_high_difference == -2) {
+        return;
+        right_rotation(parent);
+      }
+      parent = parent->parent;
     }
   }
   void erase(const KeyType &key) {

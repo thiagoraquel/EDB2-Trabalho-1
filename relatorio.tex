@@ -13,8 +13,8 @@
 \section{Resumo}
 \leavevmode
 \indent Esse relatório tem como objetivo explicar a implementação da ferramenta para 
-auxílio do monitoramento do parque das dunas. A qual foi realizada em c++ utilizando 
-uma avl-tree para armazenar os valores.
+auxílio do monitoramento do parque das dunas, a qual foi realizada em C++ utilizando 
+uma AVL-tree para armazenar os valores.
 
 \section{Introdução}
 \subsection{Cenário}
@@ -114,6 +114,7 @@ RotacaoEsquerda(raiz) \{ \\
 \indent\indent raiz.filhoDaDireita.pai = raiz; \\
 \indent    \} \\
 \} \\
+
 \subsection{Procura} 
 \subsubsection{Complexidade}
 \leavevmode
@@ -124,6 +125,7 @@ do algoritmo é O(log(n)).
 procurar(alvo) \{ \\
 \indent atual = raiz; \\
 \indent while (atual != null) \{ \\
+
 \indent\indent if ($atual.chave > alvo$) \{ \\
 \indent\indent\indent atual = atual.filhoDaEsqueda; \\
 \indent\indent \} else if ($atual.chave < alvo$) \{ \\
