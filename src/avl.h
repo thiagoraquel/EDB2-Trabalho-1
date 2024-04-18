@@ -59,7 +59,7 @@ public:
   void erase(const KeyType &key) {
     // TODO balancear a arvore
     iterator it = find(key);
-    if (it == nullptr or it == m_end) {
+    if (it == nullptr) {
       return;
     }
 
@@ -278,8 +278,6 @@ private:
 
   size_t m_size{0};
   node *m_root{nullptr};
-  node *m_begin{nullptr};
-  node *m_end{nullptr};
 };
 
 #endif // #ifndef AVL_H

@@ -75,7 +75,6 @@ public:
     if (!arquivo or arquivo.eof()) {
       return;
     }
-    arquivo.close();
 
     std::string line;
     getline(arquivo, line); // ignora a primeira linha

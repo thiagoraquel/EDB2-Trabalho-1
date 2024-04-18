@@ -17,6 +17,7 @@ void ignorar_caracteres_vazios() {
 }
 
 int ler_operacao() {
+  std::cout << "Operação: ";
   std::string entrada;
   std::getline(std::cin, entrada);
   try {
@@ -44,7 +45,6 @@ int main(int argc, char *argv[]) {
 
   printar_ajuda();
   while (true) {
-    std::cout << "Operação: ";
     int operacao = ler_operacao();
     std::string id;
     if (operacao == 1) {
@@ -84,9 +84,10 @@ int main(int argc, char *argv[]) {
     } else if (operacao == 6) {
       dados.imprima_todos_os_dados();
     } else if (operacao == 7) {
-      return 0;
+      break;
     } else {
       printar_ajuda();
     }
   }
+  return EXIT_SUCCESS;
 }
