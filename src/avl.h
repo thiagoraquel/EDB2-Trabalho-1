@@ -20,6 +20,7 @@ public:
         : first(key), second(data), children_high_difference(high),
           parent(parent), right_child(right_child), left_child(left_child) {}
   };
+
   void insert(const std::pair<KeyType, DataType> &data) {
     ++m_size;
     node *runner = m_root;
@@ -56,6 +57,7 @@ public:
       parent = parent->parent;
     }
   }
+
   void erase(const KeyType &key) {
     // TODO balancear a arvore
     iterator it = find(key);
@@ -138,6 +140,7 @@ public:
     }
     return curr;
   }
+
   iterator end() {
     if (m_root == nullptr) {
       return nullptr;
@@ -148,6 +151,7 @@ public:
     }
     return curr;
   }
+
   ~AVL() {
     if (m_root == nullptr) {
       return;
