@@ -1,0 +1,152 @@
+\documentclass{article}
+\usepackage{hyphenat}
+\usepackage{amssymb}
+
+\title{Trabalho EBD2 - segunda unidade}
+\author{Eduardo Marinho}
+\date{abril 2024}
+
+\begin{document}
+
+\maketitle
+
+\section{Resumo}
+\leavevmode
+\indent Esse relatório tem como objetivo explicar a implementação da ferramenta para 
+auxílio do monitoramento do parque das dunas. A qual foi realizada em c++ utilizando 
+uma avl-tree para armazenar os valores.
+
+\section{Introdução}
+\subsection{Cenário}
+\leavevmode
+\indent TODO
+\subsection{Estrutura da árvore}
+\leavevmode
+\indent A árvore utilizada foi a AVL-tree. Um tipo de árvore binária balanceada, ou seja,
+com a garantia de que, para todos os nodos da árvore, a diferença da altura da subarvore
+da esquerda para a altura da subarvore da direita não é maior que 1, fazendo com que a
+altura máxima da árvore seja log(n). Para manter essa propriedade a AVL-tree realiza
+rotações quando um node não estiver balanceado, de modo a torná-lo balanceado.
+
+\section{Modelagem}
+\leavevmode
+\indent Foi criada uma classe "Dados" para encapsular todos os dados da execução, e implementar
+as funções auxiliares para ler e escrever os dados no arquivo, assim como as funções
+para consultar e alterar os dados, dentre elas: "incluir animal" para incluir um novo 
+animal no banco de dados, "remover animal" para remover um animal, "consultar fauna"
+para consultar as infomações de um animal específico, "inserir monitoramento" para 
+inserir dados de monitoramento para um animal específico, entre outras. \\
+\indent Além disso, foi criado structs auxiliares como DadosDoAnimal e DadosDeMonitoramento,
+para encapsular os respectivos dados e métodos de entrada e saida dos valores relacionados.\\
+\indent Ao início da execução o arquivo é lido pela class "Dados", onde todos os dados são
+armazenados e então, é criado um loop, onde é lido a operação que o usúario deseja
+realizar e os dados necessários, caso hajam, o loop acaba quando o usúario escolher
+a opção de acabar a execução, fazendo com que o loop acabe e os dados sejam salvos
+no mesmo arquivo de entrada.
+
+\section{Algoritmos}
+Considere que o nodo contém a seguinte estrutura: \\
+struct nodo \{ \\
+\indent int chave; \\
+\indent int fatorDeBalanceamento; \\
+\indent nodo filhoDaEsquerda; \\
+\indent nodo filhoDaDireita; \\
+\}; \\
+\subsection{Inserção}
+\subsubsection{Complexidade}
+\leavevmode
+\indent Para realizar a inserção em uma AVL tree é necessário encontrar o local a qual se 
+deve inserir o nodo, para isso deve percorrer um número de nodos equivalente a O(log(n)), 
+onde n é o número de nodos da arvore. Ademais, sabe-se que as etapas auxiliares no algoritmo, 
+como rotacionar a arvore para balanceá-la e colocar o nodo no local tem complexidade constantes.
+Portanto, a complexidade do algoritmo de inserção é O(log(n)).
+\subsubsection{Pseudocódigo}
+Inserir(raiz, chave) { \\
+\indent if raiz == null \{ \\
+\indent\indent raiz = new Nodo \\
+\indent\indent raiz.chave = chave \\
+\indent\indent retornar \\
+\indent \} \\
+\indent   if $valor < raiz.valor$ \{ \\
+\indent\indent raiz.esquerda = InserirAVL(raiz.esquerda, valor) \\
+\indent\indent --raiz.fatorDeBalanceamento; \\
+\indent} else if $valor > raiz.valor$ \{ \\
+\indent\indent raiz.direita = InserirAVL(raiz.direita, valor) \\
+\indent\indent ++raiz.fatorDeBalanceamento; \\
+\indent \} else \{ \\
+\indent\indent retornar raiz // Valor já esta inserido \\
+\indent \} \\
+\indent if (raiz.fatorDeBalanceamento == 2) \{ \\
+\indent\indent rotaçãoEsquerda(raiz) \\
+\indent \} else if (raiz.fatorDeBalanceamento == -2) { \\
+\indent\indent rotaçãoDireita(raiz) \\
+\indent \} \\
+\}
+
+RotacaoDireita(raiz) \{ \\
+\indent novaRaiz = raiz.filhoDaEsquerda; \\
+\indent if (raiz == raiz.pai.filhoDaEsquerda) \{ \\
+\indent\indent raiz.pai.filhoDaEsquerda = novaRaiz; \\
+\indent \} else \{ \\
+\indent\indent raiz.pai.filhoDaDireita = novaRaiz; \\
+\indent \} \\ 
+\indent novaRaiz.pai = raiz.pai; \\
+\indent raiz.pai = novaRaiz; \\
+\indent raiz.filhoDaEsquerda = novaRaiz.filhoDaDireita; \\
+\indent novaRaiz.filhoDaDireita = raiz; \\
+\indent if (raiz.filhoDaEsquerda != null) \{ \\
+\indent\indent raiz.filhoDaEsquerda.pai = raiz; \\
+\indent \} \\
+\} 
+
+RotacaoEsquerda(raiz) \{ \\
+\indent novaRaiz = raiz.filhoDaDireita; \\
+\indent if (raiz == raiz.pai.filhoDaEsquerda) \{ \\
+\indent\indent raiz.pai.filhoDaEsquerda = novaRaiz; \\
+\indent \} else \{ \\
+\indent\indent raiz.pai.filhoDaDireita = novaRaiz; \\
+\indent \} \\
+\indent novaRaiz.pai = raiz.pai; \\ 
+\indent raiz.pai = novaRaiz; \\
+\indent raiz.filhoDaDireita = novaRaiz.filhoDaEsquerda; \\
+\indent novaRaiz.filhoDaEsquerda = raiz; \\
+\indent if (raiz.filhoDaDireita != null) \{ \\
+\indent\indent raiz.filhoDaDireita.pai = raiz; \\
+\indent    \} \\
+\} \\
+\subsection{Procura} 
+\subsubsection{Complexidade}
+\leavevmode
+\indent Como o máximo de operações realizadas é equivalente a altura da arvore e considerando 
+que a altura maxima da arvore é log(n), tendo em vista que ela é balanceada, a complexidade 
+do algoritmo é O(log(n)).
+\subsubsection{Pseudocódigo}
+procurar(alvo) \{ \\
+\indent atual = raiz; \\
+\indent while (atual != null) \{ \\
+\indent\indent if ($atual.chave > alvo$) \{ \\
+\indent\indent\indent atual = atual.filhoDaEsqueda; \\
+\indent\indent \} else if ($atual.chave < alvo$) \{ \\
+\indent\indent\indent atual = atual.filhoDaDireita; \\
+\indent\indent \} else \{ \\
+\indent\indent\indent retorne atual; \\
+\indent\indent \} \\
+\indent\} \\ 
+\indent returne atual; \\
+\} \\
+
+\subsection{Remocão} 
+\subsubsection{Complexidade}
+\leavevmode
+\indent Como é preciso realizar o algoritmo de procura para achar o nodo a ser removido, 
+e como as operações de remoção e de rotação da árvore tem complexidades constantes
+o algoritmo de remoção tem complexidade de O(log(n)).
+\subsubsection{Pseudocódigo}
+\leavevmode
+\indent TODO
+
+\section{Conclusão}
+\leavevmode
+\indent TODO
+
+\end{document}

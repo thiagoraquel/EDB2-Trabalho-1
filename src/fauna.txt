@@ -1,0 +1,12 @@
+Apelido | Primeiro dia de monitoramento | Espécie | Sexo | Data de nascimento | 
+00|ape|24/04/2022|desconhecida|feminino||0
+1|mimosa|01/04/2024|alguma especie de vaca|masculino|desconhecida|2
+04/04/2024|32|500kg|1.5m|nao|Em perfeira ordem 
+20/04/2024|33|440|1.5m|nao|Perfeiro
+12|rasberry|01/01/2024|chipanze|masculino|01/01/2023|0
+2|pequeno|02/04/2024|alguma especie de esquilo|feminino|01/04/2023|0
+20|mouse|20/04/2024|alguma especie de rato|feminino|22/10/2023|0
+288|Voador|20/04/2023|papaguaio|feminino|20/04/2023|1
+20/04/2024|23|0.333|0.3|sim |Ok
+33|Chips|11/10/2022|chipanze|masculino|11/10/2022|1
+20/10/2023|30|22|50cm|nao|normal
