@@ -4,6 +4,9 @@
 
 #include "dados.h"
 
+/**
+ * Show operations
+*/
 void printar_ajuda() {
   std::cout << "Digite um numero de 1 a 6 para indicar qual operacao deseja\n";
   std::cout << "1 - Inserir animal, 2 - Remover animal, 3 - Consultar id, 4 - "
@@ -16,6 +19,9 @@ void ignorar_caracteres_vazios() {
   std::getline(std::cin, lixo);
 }
 
+/**
+ * Verify if string can convert to int
+*/
 int ler_operacao() {
   std::cout << "Operação: ";
   std::string entrada;
@@ -28,6 +34,9 @@ int ler_operacao() {
   }
 }
 
+/**
+ * Read animal id
+*/
 void leia_id_do_animal(std::string &id) {
   std::cout << "Digite o id do animal: ";
   std::cin >> id;
@@ -36,15 +45,18 @@ void leia_id_do_animal(std::string &id) {
 
 int main(int argc, char *argv[]) {
   std::string arquivo_de_entrada;
+
   if (argc > 1) {
+    // Se colocou o nome de outro arquivo
     arquivo_de_entrada = argv[1];
   } else {
+    // Se não, use o arquivo padrão
     arquivo_de_entrada = "fauna.txt";
   }
   Dados dados(arquivo_de_entrada);
 
-  printar_ajuda();
-  while (true) {
+  printar_ajuda(); // Mostre as operações ao usuário  
+  while (true) {   // Continue até operação sair escolhida
     int operacao = ler_operacao();
     std::string id;
     if (operacao == 1) {
@@ -83,9 +95,9 @@ int main(int argc, char *argv[]) {
       dados.salvar_dados();
     } else if (operacao == 6) {
       dados.imprima_todos_os_dados();
-    } else if (operacao == 7) {
+    } else if (operacao == 7) { // Se operação = 7, sair
       break;
-    } else {
+    } else {                    // Qualquer outra operação fora de {1,...,7}, mostre a ajuda com as operações 
       printar_ajuda();
     }
   }

@@ -23,12 +23,25 @@ const static std::string ordem_dos_dados_do_animal[NumeroDeDadosDoAnimal] = {
     "Data de nascimento",
 };
 
+/**
+ * Class that contains
+*/
 class Dados {
 public:
+  /**
+   * IdType = string
+  */
   using IdType = std::string;
-  struct DadosDeMonitoramento {
-    std::unordered_map<std::string, std::string> dados;
 
+  /**
+   * Dados do monitoramento do animal
+  */
+  struct DadosDeMonitoramento {
+    std::unordered_map<std::string, std::string> dados; // Armazena pares de chave-valor onde tanto a chave como o valor são strings
+
+    /**
+     * Leia os valores que o usuário der para cada dado de monitoramento
+    */
     void leia_valores() {
       for (const std::string &dado : ordem_dos_dados_de_monitoramento) {
         std::cout << dado << ": ";
@@ -38,6 +51,9 @@ public:
       }
     }
 
+    /**
+     * Printe os valores dos dados de monitoramento
+    */
     void printar_valores() {
       for (const std::string &dado : ordem_dos_dados_de_monitoramento) {
         std::cout << "\t" << dado << ": " << dados[dado] << '\n';
@@ -45,10 +61,16 @@ public:
     }
   };
 
+  /**
+   * Dados do animal e do monitoramento do animal
+  */
   struct DadosDoAnimal {
-    std::unordered_map<std::string, std::string> dados;
-    std::vector<DadosDeMonitoramento> monitoramento;
+    std::unordered_map<std::string, std::string> dados; // Armazena pares de chave-valor onde tanto a chave como o valor são strings
+    std::vector<DadosDeMonitoramento> monitoramento;  // Vetor de dados de monitorametno
 
+    /**
+     * Leia os valores que o usuário der para cada dado do animal
+    */
     void leia_valores() {
       for (const std::string &dado : ordem_dos_dados_do_animal) {
         std::cout << dado << ": ";
@@ -58,6 +80,9 @@ public:
       }
     }
 
+    /**
+     * Printar dados do animal e do monitoramento
+    */
     void printar_valores() {
       for (const std::string &dado : ordem_dos_dados_do_animal) {
         std::cout << dado << ": " << dados[dado] << '\n';
@@ -69,24 +94,40 @@ public:
     }
   };
 
+  /**
+   * Constructor
+  */
   Dados(const std::string &nome_do_arquivo) {
+
+    // Atualize m_nome_do_arquivo
     m_nome_do_arquivo = nome_do_arquivo;
+
+    // Abre o arquivo cujo nome é armazenado em m_nome_do_arquivo para leitura
     std::ifstream arquivo(m_nome_do_arquivo);
+
+    // Verifica se arquivo vazio ou se atingiu o final (eof)
     if (!arquivo or arquivo.eof()) {
       return;
     }
 
     std::string line;
-    getline(arquivo, line); // ignora a primeira linha
+    getline(arquivo, line); // ignora a primeira linha 
+    // Essa linha: " Apelido | Primeiro dia de monitoramento | Espécie | Sexo | Data de nascimento | "
+
+    // Enquanto arquivo não chegou no final e há linhas para ler
     while (!arquivo.eof() && std::getline(arquivo, line)) {
-      std::stringstream ss(line);
-      std::string token;
+      std::stringstream ss(line); // Passe line para ss
+      std::string token;  // Tokens da linha
 
       IdType id;
-      getline(ss, id, '|');
+      getline(ss, id, '|'); // Lê os dados em ss até encontrar '|' e passa para id
 
       DadosDoAnimal animal_data;
-      for (int index = 0; index < NumeroDeDadosDoAnimal; ++index) {
+      // Repita 5 vezes (numero_dados_animal)
+
+      // Comentar resto (TODO)
+
+      for (int index = 0; index < NumeroDeDadosDoAnimal; ++index) { 
         getline(ss, token, '|');
         animal_data.dados[ordem_dos_dados_do_animal[index]] = token;
       }
@@ -113,8 +154,11 @@ public:
     }
   }
 
-  ~Dados() { salvar_dados(); }
+  ~Dados() { salvar_dados(); }  // Deconstrutor
 
+  /**
+   * Inserir animal na árvore AVL
+  */
   void inserir_animal(const IdType &id, const DadosDoAnimal &dados_do_animal) {
     m_dados.insert({id, dados_do_animal});
   }
@@ -179,6 +223,9 @@ public:
     }
   }
 
+  /**
+   * Verifica se id é válido
+  */
   bool id_valido(const IdType &id) {
     if (m_dados.find(id) == nullptr) {
       return false;
@@ -200,5 +247,8 @@ public:
 
 private:
   AVL<IdType, DadosDoAnimal> m_dados;
+  /**
+   * Name of the archive
+  */
   std::string m_nome_do_arquivo;
 };
