@@ -40,11 +40,11 @@ public:
     if (parent == nullptr) { // tree empty
       m_root = new_node;
     } else if (data.first < parent->first) {
-      ++(parent->children_high_difference);
       parent->left_child = new_node;
+      --(parent->children_high_difference);
     } else {
-      ++(parent->children_high_difference);
       parent->right_child = new_node;
+      ++(parent->children_high_difference);
     }
     while (parent != nullptr) {
       if (parent->children_high_difference == 2) {
@@ -55,6 +55,19 @@ public:
         right_rotation(parent);
       }
       parent = parent->parent;
+      // if (parent->left_child == nullptr and parent->right_child == nullptr) {
+      //   parent->children_high_difference = 0;
+      // } else if (parent->left_child == nullptr) {
+      //   parent->children_high_difference =
+      //       abs(parent->right_child->children_high_difference);
+      // } else if (parent->right_child == nullptr) {
+      //   parent->children_high_difference =
+      //       -abs(parent->left_child->children_high_difference);
+      // } else {
+      //   parent->children_high_difference =
+      //       abs(parent->left_child->children_high_difference) -
+      //       abs(parent->right_child->children_high_difference);
+      // }
     }
   }
 
